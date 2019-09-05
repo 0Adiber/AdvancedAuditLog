@@ -1,0 +1,28 @@
+{
+    "token": "xyz",
+    "serverLogging":{
+        "enabled": true,
+        "options": [
+            "channelCreate",
+            "channelDelete",
+            "channelUpdate",
+            "debug",
+            "emojiCreate",
+            "emojiDelete",
+            "emojiUpdate",
+            "guildBanAdd",
+            "guildBanRemove",
+            "guildMemberAdd",
+            "guildMemberRemove",
+            "guildMemberUpdate",
+            "guildUpdate",
+            "message"
+        ]
+    },
+    "userLogging": {
+        "enabled": false,
+        "users": [],
+        "roles": [],
+        "options": []
+    }
+}
