@@ -16,13 +16,21 @@
             "guildMemberRemove",
             "guildMemberUpdate",
             "guildUpdate",
-            "message"
+            "message",
+            "messageDelete",
+            "messageDeleteBulk",
+            "messageUpdate",
+            "messageReactionAdd",
+            "messageReactionRemove",
+            "roleCreate",
+            "roleDelete",
+            "roleUpdate"
         ]
     },
     "userLogging": {
         "enabled": false,
-        "users": [],
-        "roles": [],
+        "user-ids": [],
+        "role-ids": [],
         "options": []
     }
 }

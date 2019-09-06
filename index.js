@@ -274,8 +274,149 @@ class serverListener {
                     "url": msg.url,
                     "attachments": attachments,
                     "created-at": msg.createdAt,
+                    "message": "A message was sent."
                 }
                 this.logger("message", m);
+            },
+            messageDelete: (msg) => {
+                let attachments = []
+
+                msg.attachments.forEach((v, k, map) => {
+                    attachments.push({
+                        "filename": v.filename,
+                        "filesize": v.filesize,
+                        "id": v.id,
+                        "url": v.url
+                    });
+                });
+
+                let m = {
+                    "id": msg.id,
+                    "author-id": msg.author.id,
+                    "author-tag": msg.author.tag,
+                    "channel-id": msg.channel.id,
+                    "channel-name": msg.channel.name,
+                    "content": msg.cleanContent,
+                    "send-by-system": msg.system,
+                    "tts": msg.tts,
+                    "type": msg.type,
+                    "url": msg.url,
+                    "attachments": attachments,
+                    "deleted": msg.deleted,
+                    "created-at": msg.createdAt,
+                    "message": "A message was deleted."
+                }
+                this.logger("messageDelete", m)
+            },
+            messageDeleteBulk: (msgs) => {
+                let ms = {}
+                let counter = 0;
+                for(let msg in msgs.toArray()) {
+                    let attachments = []
+
+                    msg.attachments.forEach((v, k, map) => {
+                        attachments.push({
+                            "filename": v.filename,
+                            "filesize": v.filesize,
+                            "id": v.id,
+                            "url": v.url
+                        });
+                    });
+
+                    let m = {
+                        "id": msg.id,
+                        "author-id": msg.author.id,
+                        "author-tag": msg.author.tag,
+                        "channel-id": msg.channel.id,
+                        "channel-name": msg.channel.name,
+                        "content": msg.cleanContent,
+                        "send-by-system": msg.system,
+                        "tts": msg.tts,
+                        "type": msg.type,
+                        "url": msg.url,
+                        "attachments": attachments,
+                        "deleted": msg.deleted,
+                        "created-at": msg.createdAt,
+                        "message": "A message was deleted."
+                    }
+                    ms[counter++] = m;
+                }
+                ms[counter++] = {"message": "A bulk of message was deleted."};
+                this.logger("messageDeleteBulk", ms)
+            },
+            messageReactionAdd: (msgR, user) => {
+                let r = {
+                    "msg-id": msgR.message.id,
+                    "msg-author": msgR.message.author.tag,
+                    "emoji-id": msgR.emoji.id,
+                    "emoji-identifier": msgR.emoji.identifier,
+                    "emoji-name": msgR.emoji.name,
+                    "user-id": user.id,
+                    "user-tag": user.tag,
+                    "message": "A reaction was added to a message."
+                }
+                this.logger("messageReactionAdd", r);
+            },
+            messageReactionRemove: (msgR, user) => {
+                let r = {
+                    "msg-id": msgR.message.id,
+                    "msg-author": msgR.message.author.tag,
+                    "emoji-id": msgR.emoji.id,
+                    "emoji-identifier": msgR.emoji.identifier,
+                    "emoji-name": msgR.emoji.name,
+                    "user-id": user.id,
+                    "user-tag": user.tag,
+                    "message": "A reaction was added to a message."
+                }
+                this.logger("messageReactionRemove", r);
+            },
+            messageUpdate: (oldM, newM) => {
+                let m = {
+                    "old-id": oldM.id,
+                    "new-id": newM.id,
+                    "old-content": oldM.cleanContent,
+                    "new-content": newM.cleanContent,
+                    "author": newM.author,
+                    "url": newM.url,
+                    "created-at": newM.createdAt,
+                    "edited-at": newM.editedAt,
+                    "edits": newM.edits.length
+                }
+                this.logger("messageUpdate", m);
+            },
+            roleCreate: (role) => {
+                let r = {
+                    "id": role.id,
+                    "name": role.name,
+                    "color": role.color,
+                    "permissions": role.permissions,
+                    "created-at": role.createdAt
+                }
+                this.logger("roleCreate", r);
+            },
+            roleDelete: (role) => {
+                let r = {
+                    "id": role.id,
+                    "name": role.name,
+                    "color": role.color,
+                    "permissions": role.permissions,
+                    "created-at": role.createdAt
+                }
+                this.logger("roleCreate", r);
+            },
+            roleUpdate: (oldR, newR) => {
+                let r = {
+                    "old-id": oldR.id,
+                    "new-id": newR.id,
+                    "old-name": oldR.name,
+                    "new-name": newR.name,
+                    "old-color": oldR.color,
+                    "new-color": newR.color,
+                    "old-permissions": oldR.permissions,
+                    "new-permissions": newR.permissions,
+                    "created-at": role.createdAt
+                }
+                this.logger("roleCreate", r);
             }
         };
         return funcs[name];
